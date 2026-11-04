@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tối Chủ Nhật 08.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #070616;
+  --bg-2: #0e0b26;
+  --card: rgba(255, 255, 255, .055);
+  --card-hi: rgba(255, 255, 255, .09);
+  --line: rgba(255, 255, 255, .12);
+  --text: #f6f3ff;
+  --muted: #bfb9df;
+  --pink: #f472b6;
+  --pink-strong: #ec4899;
+  --rose: #be185d;
+  --violet: #8b5cf6;
+  --cyan: #22d3ee;
+  --gold: #fbbf24;
+  --warn: #fcd34d;
+  --radius: 22px;
+  --display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 var(--sans);
+  overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+a { color: inherit; }
+.i { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: max(20px, env(safe-area-inset-left, 0px)); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; border-radius: 10px; }
+.skip { position: absolute; left: 16px; top: -60px; z-index: 50; background: var(--pink); color: #1a0412; padding: 10px 16px; border-radius: 12px; font-weight: 700; text-decoration: none; }
+.skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+
+/* ---------- HERO ---------- */
+.hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; isolation: isolate; overflow: hidden; background: radial-gradient(120% 80% at 50% 0%, #1b1050 0%, var(--bg) 62%); }
+.aurora { position: absolute; inset: -20% -10% auto; height: 90%; z-index: -2; filter: blur(70px); opacity: .75; pointer-events: none; }
+.aurora span { position: absolute; border-radius: 50%; mix-blend-mode: screen; animation: drift 14s ease-in-out infinite alternate; }
+.aurora span:nth-child(1) { width: 55vw; height: 40vw; left: 0; top: 10%; background: #ec4899; }
+.aurora span:nth-child(2) { width: 50vw; height: 38vw; right: 0; top: 0; background: #7c3aed; animation-duration: 18s; animation-delay: -6s; }
+.aurora span:nth-child(3) { width: 38vw; height: 30vw; left: 35%; top: 35%; background: #0891b2; opacity: .7; animation-duration: 22s; animation-delay: -3s; }
+@keyframes drift { to { transform: translate3d(6vw, 4vh, 0) scale(1.15); } }
+.sky { position: absolute; inset: 0 0 35%; z-index: -1; pointer-events: none; }
+.sky i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff; animation: twinkle 3.2s ease-in-out infinite; }
+@keyframes twinkle { 50% { opacity: .15; transform: scale(.6); } }
+
+.hero > .wrap { width: 100%; }
+.hero-top { padding-top: calc(28px + env(safe-area-inset-top, 0px)); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .02em; color: var(--muted); font-size: 14px; }
+.brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 0 4px rgba(244, 114, 182, .2), 0 0 18px var(--pink); }
+.countdown { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, .08); border: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 14px; color: var(--muted); }
+.countdown b { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.hero-body { flex: 1; display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; padding-block: 48px 24px; }
+.eyebrow { display: inline-flex; gap: 10px; align-items: center; text-transform: uppercase; letter-spacing: .18em; font-size: 13px; font-weight: 700; color: var(--pink); }
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: linear-gradient(90deg, var(--pink), transparent); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(44px, 5.4vw, 76px); line-height: 1.04; margin: 18px 0 20px; letter-spacing: -.01em; text-wrap: balance; }
+h1 em { display: block; font-style: italic; background: linear-gradient(100deg, #fbcfe8 0%, #f472b6 35%, #c084fc 65%, #67e8f9 100%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .08em; }
+.lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 32ch; margin: 0 0 28px; }
+.lead strong { color: var(--text); font-weight: 600; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: 600 15px/1 var(--sans); text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s; touch-action: manipulation; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: linear-gradient(135deg, #f9a8d4, #ec4899); color: #1a0412; box-shadow: 0 10px 30px -8px rgba(236, 72, 153, .7); }
+.btn-primary:hover { box-shadow: 0 14px 40px -6px rgba(236, 72, 153, .9); }
+.btn-ghost { background: rgba(255, 255, 255, .06); border-color: var(--line); color: var(--text); }
+.btn-ghost:hover { background: rgba(255, 255, 255, .12); }
+
+/* ticket */
+.ticket { position: relative; display: grid; grid-template-columns: 1fr 64px; border-radius: 24px; background: linear-gradient(160deg, rgba(34, 211, 238, .16), rgba(14, 11, 38, .85) 45%), var(--bg-2); border: 1px solid rgba(103, 232, 249, .35); box-shadow: 0 0 0 1px rgba(255, 255, 255, .04) inset, 0 30px 80px -20px rgba(34, 211, 238, .45), 0 0 120px -30px rgba(236, 72, 153, .5); transform: rotate(-2.5deg); animation: breathe 5s ease-in-out infinite; }
+@keyframes breathe { 50% { box-shadow: 0 0 0 1px rgba(255, 255, 255, .04) inset, 0 30px 90px -14px rgba(34, 211, 238, .7), 0 0 140px -20px rgba(236, 72, 153, .6); } }
+.ticket::before, .ticket::after { content: ""; position: absolute; right: 52px; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); }
+.ticket::before { top: -12px; box-shadow: inset 0 -1px 0 rgba(103, 232, 249, .35); }
+.ticket::after { bottom: -12px; box-shadow: inset 0 1px 0 rgba(103, 232, 249, .35); }
+.t-main { padding: 24px 22px 22px 26px; border-right: 2px dashed rgba(103, 232, 249, .35); }
+.t-cinema { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #a5f3fc; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.t-title { font-family: var(--display); font-size: clamp(28px, 3.4vw, 36px); line-height: 1.1; margin: 10px 0 6px; font-weight: 700; }
+.t-meta { font-size: 14px; color: var(--muted); margin: 0 0 18px; }
+.t-times { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+.t-big { font-size: 56px; font-weight: 800; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; background: linear-gradient(180deg, #fff, #a5f3fc); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 40px rgba(34, 211, 238, .35); }
+.t-arrow { font-size: 15px; color: var(--muted); padding-bottom: 8px; }
+.t-arrow b { color: var(--text); font-size: 22px; font-variant-numeric: tabular-nums; }
+.t-note { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+.t-stub { writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 800; letter-spacing: .3em; font-size: 13px; color: #a5f3fc; }
+
+/* skyline */
+.skyline { position: relative; margin-top: auto; height: clamp(160px, 26vw, 300px); pointer-events: none; }
+.skyline svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.blink { animation: blink 1.6s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+.water { animation: shimmer 6s ease-in-out infinite alternate; transform-origin: center; }
+@keyframes shimmer { to { transform: scaleX(1.04) translateX(-1%); opacity: .8; } }
+
+/* ---------- SECTIONS ---------- */
+section { position: relative; padding-block: 88px; }
+.s-head { max-width: 680px; margin-bottom: 36px; }
+.kicker { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; color: var(--pink); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+h2 { font-family: var(--display); font-size: clamp(34px, 5vw, 56px); line-height: 1.08; margin: 0 0 14px; font-weight: 700; }
+h2 em { font-style: italic; color: var(--pink); }
+.s-sub { color: var(--muted); margin: 0; font-size: 17px; }
+
+/* timeline */
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; display: grid; gap: 14px; }
+.timeline::before { content: ""; position: absolute; left: 86px; top: 12px; bottom: 12px; width: 2px; background: linear-gradient(180deg, var(--pink), var(--violet) 50%, var(--cyan)); opacity: .7; }
+.step { display: grid; grid-template-columns: 70px 34px 1fr; align-items: start; gap: 0 14px; }
+.step time { text-align: right; font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums; padding-top: 14px; }
+.node { width: 34px; height: 34px; margin-top: 10px; border-radius: 50%; display: grid; place-items: center; background: var(--bg-2); border: 2px solid var(--pink); color: var(--pink); position: relative; z-index: 1; box-shadow: 0 0 18px rgba(244, 114, 182, .5); }
+.node .i { width: 16px; height: 16px; }
+.step.movie .node { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 24px rgba(34, 211, 238, .7); }
+.step-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 18px; }
+.step-card h3 { margin: 0 0 2px; font-size: 18px; }
+.step-card p { margin: 0; color: var(--muted); font-size: 15px; }
+.step.movie .step-card { background: linear-gradient(120deg, rgba(34, 211, 238, .14), rgba(139, 92, 246, .08)); border-color: rgba(103, 232, 249, .35); }
+
+/* option cards */
+.grid { display: grid; gap: 18px; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.opt { position: relative; display: flex; flex-direction: column; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); padding: 22px; cursor: pointer; transition: transform .25s var(--ease), border-color .25s, background .25s, box-shadow .25s; }
+.opt:hover { transform: translateY(-3px); background: var(--card-hi); }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt:has(input:checked) { border-color: var(--pink); background: linear-gradient(160deg, rgba(236, 72, 153, .16), rgba(139, 92, 246, .08)); box-shadow: 0 20px 60px -24px rgba(236, 72, 153, .8); }
+.opt:has(input:focus-visible) { outline: 3px solid var(--cyan); outline-offset: 3px; }
+.pick { position: absolute; top: 18px; right: 18px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; color: transparent; transition: .2s; }
+.pick .i { width: 14px; height: 14px; stroke-width: 3; }
+.opt:has(input:checked) .pick { background: var(--pink); border-color: var(--pink); color: #1a0412; }
+.opt-kicker { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--pink); margin: 0 0 6px; padding-right: 36px; }
+.opt h3 { font-family: var(--display); font-size: 26px; line-height: 1.15; margin: 0 0 10px; padding-right: 36px; }
+.opt > p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
+.facts { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+.facts li { display: flex; gap: 10px; align-items: flex-start; }
+.facts .i { width: 16px; height: 16px; margin-top: 3px; color: var(--pink); }
+.facts .warn { color: var(--warn); }
+.facts .warn .i { color: var(--warn); }
+.badge { position: absolute; top: -12px; left: 20px; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; background: linear-gradient(135deg, #fde68a, #f59e0b); color: #2a1600; box-shadow: 0 6px 20px -6px rgba(245, 158, 11, .8); }
+.badge.cyan { background: linear-gradient(135deg, #a5f3fc, #22d3ee); color: #02262e; box-shadow: 0 6px 20px -6px rgba(34, 211, 238, .8); }
+.badge.soft { background: rgba(255, 255, 255, .14); color: var(--text); box-shadow: none; backdrop-filter: blur(6px); }
+.opt-foot { margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.mini { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; background: rgba(255, 255, 255, .08); border: 1px solid var(--line); transition: background .2s; }
+.mini:hover { background: rgba(255, 255, 255, .16); }
+.mini .i { width: 16px; height: 16px; }
+.tip { margin-top: 22px; display: flex; gap: 12px; align-items: flex-start; padding: 14px 18px; border-radius: 16px; background: rgba(251, 191, 36, .08); border: 1px solid rgba(251, 191, 36, .25); color: #fde68a; font-size: 15px; }
+.tip .i { margin-top: 3px; }
+
+/* weather switch */
+.after { overflow: hidden; }
+.after::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(70% 60% at 85% 10%, rgba(139, 92, 246, .22), transparent 70%), radial-gradient(60% 40% at 0% 65%, rgba(236, 72, 153, .14), transparent 70%); transition: opacity .5s; }
+.rain { position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .6s; pointer-events: none; background-image: repeating-linear-gradient(105deg, transparent 0 22px, rgba(165, 243, 252, .13) 22px 23px, transparent 23px 46px); background-size: 200px 200px; animation: fall .5s linear infinite; }
+@keyframes fall { to { background-position: -40px 200px; } }
+.after[data-weather="rain"] .rain { opacity: 1; }
+.after[data-weather="rain"]::before { background: radial-gradient(70% 60% at 85% 10%, rgba(34, 211, 238, .2), transparent 70%), radial-gradient(60% 50% at 0% 90%, rgba(59, 130, 246, .18), transparent 70%); }
+.seg { display: inline-grid; grid-template-columns: 1fr 1fr; padding: 5px; border-radius: 999px; background: rgba(255, 255, 255, .07); border: 1px solid var(--line); margin: 6px 0 34px; position: relative; }
+.seg button { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border: 0; background: none; color: var(--muted); font: 700 15px var(--sans); cursor: pointer; border-radius: 999px; transition: color .3s; }
+.seg button[aria-pressed="true"] { color: #1a0412; }
+.seg::before { content: ""; position: absolute; top: 5px; bottom: 5px; left: 5px; width: calc(50% - 5px); border-radius: 999px; background: linear-gradient(135deg, #fde68a, #f59e0b); box-shadow: 0 8px 26px -8px rgba(245, 158, 11, .9); transition: transform .45s var(--ease), background .45s; }
+.after[data-weather="rain"] .seg::before { transform: translateX(100%); background: linear-gradient(135deg, #a5f3fc, #22d3ee); box-shadow: 0 8px 26px -8px rgba(34, 211, 238, .9); }
+[data-when] { display: none; }
+.after[data-weather="dry"] [data-when="dry"], .after[data-weather="rain"] [data-when="rain"] { display: grid; animation: rise .5s var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.dropped { margin-top: 26px; border-radius: 16px; border: 1px dashed var(--line); padding: 4px 18px; color: var(--muted); font-size: 15px; }
+.dropped summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; color: var(--text); }
+.dropped ul { margin: 0 0 14px; padding-left: 20px; }
+.dropped li { margin-bottom: 6px; }
+
+/* map */
+.map-shell { position: relative; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 80px -30px rgba(139, 92, 246, .6); }
+#map { height: clamp(360px, 55vw, 540px); background: #0b0a1a; }
+.legend { display: flex; gap: 10px 20px; flex-wrap: wrap; margin-top: 16px; font-size: 14px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 12px; height: 12px; border-radius: 50%; }
+.map-fallback { padding: 40px 24px; text-align: center; color: var(--muted); }
+.leaflet-container { font-family: var(--sans); }
+.leaflet-tile-pane { filter: sepia(.35) hue-rotate(215deg) saturate(1.6) brightness(.95); }
+.pin-wrap { position: relative; display: block; width: 16px; height: 16px; }
+.pin { display: block; width: 16px; height: 16px; border-radius: 50%; border: 3px solid #fff; }
+.pin.small { width: 12px; height: 12px; margin: 2px; border-width: 2px; }
+.pin.pink { background: var(--pink-strong); box-shadow: 0 0 0 6px rgba(236, 72, 153, .3), 0 0 24px var(--pink-strong); animation: ping 2s ease-out infinite; }
+.pin.gold { background: var(--gold); box-shadow: 0 0 16px var(--gold); }
+.pin.cyan { background: var(--cyan); box-shadow: 0 0 16px var(--cyan); }
+.pin.violet { background: var(--violet); box-shadow: 0 0 16px var(--violet); }
+@keyframes ping { 70% { box-shadow: 0 0 0 16px rgba(236, 72, 153, 0), 0 0 24px var(--pink-strong); } }
+.pin-label { position: absolute; top: 50%; left: 24px; transform: translateY(-50%); white-space: nowrap; font: 700 12px/1 var(--sans); color: #fff; background: rgba(7, 6, 22, .82); padding: 6px 9px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .18); }
+.pin-wrap.left .pin-label { left: auto; right: 24px; }
+.leaflet-control-attribution { background: rgba(7, 6, 22, .7) !important; color: #c9c4e6 !important; }
+.leaflet-control-attribution a { color: #f9a8d4 !important; }
+.leaflet-bar a { background: #15122e !important; color: #fff !important; border-color: rgba(255, 255, 255, .15) !important; width: 44px !important; height: 44px !important; line-height: 44px !important; }
+
+/* checklist + summary */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+.panel { border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); padding: 26px; }
+.panel h3 { font-family: var(--display); font-size: 28px; margin: 0 0 16px; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.checks label { display: flex; gap: 14px; align-items: center; min-height: 48px; padding: 6px 10px; border-radius: 14px; cursor: pointer; transition: background .2s; }
+.checks label:hover { background: rgba(255, 255, 255, .05); }
+.checks input { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; flex: none; margin: 0; border-radius: 8px; border: 2px solid rgba(255, 255, 255, .35); display: grid; place-items: center; cursor: pointer; transition: .2s; }
+.checks input:checked { background: var(--pink); border-color: var(--pink); }
+.checks input:checked::after { content: ""; width: 6px; height: 11px; border: solid #1a0412; border-width: 0 3px 3px 0; transform: rotate(45deg) translate(-1px, -1px); }
+.checks input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(244, 114, 182, .7); }
+.checks small { display: block; color: var(--muted); font-size: 13px; }
+.progress { height: 6px; border-radius: 99px; background: rgba(255, 255, 255, .08); margin-top: 16px; overflow: hidden; }
+.progress div { height: 100%; width: 0; background: linear-gradient(90deg, var(--pink), var(--cyan)); transition: width .5s var(--ease); }
+.summary { background: linear-gradient(160deg, rgba(236, 72, 153, .18), rgba(34, 211, 238, .08)), var(--bg-2); border-color: rgba(244, 114, 182, .4); }
+.sum-list { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 12px; }
+.sum-list li { display: grid; grid-template-columns: 60px 1fr; gap: 12px; align-items: baseline; }
+.sum-list b { font-variant-numeric: tabular-nums; color: var(--pink); }
+.sum-list span small { display: block; color: var(--muted); font-size: 13px; }
+.copied { display: block; margin-top: 10px; font-size: 14px; color: #a7f3d0; }
+
+footer { padding-block: 60px calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer h2 { font-family: var(--sans); font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: var(--text); margin: 0 0 12px; }
+footer ul { margin: 0 0 18px; padding-left: 18px; columns: 2; column-gap: 32px; }
+footer li { margin-bottom: 6px; break-inside: avoid; }
+footer a { color: #f9a8d4; }
+
+/* Visible by default: a full-page screenshot (to send in Messenger) must never capture blank sections. */
+.reveal.in { animation: rise .8s var(--ease) both; }
+
+@media (max-width: 900px) {
+  .hero-body { grid-template-columns: 1fr; gap: 36px; padding-top: 36px; }
+  .ticket { transform: rotate(-1.5deg); max-width: 460px; }
+  .grid-3, .grid-2, .two { grid-template-columns: 1fr; }
+  footer ul { columns: 1; }
+}
+@media (max-width: 480px) {
+  section { padding-block: 64px; }
+  .timeline::before { left: 70px; }
+  .step { grid-template-columns: 54px 34px 1fr; gap: 0 10px; }
+  .step time { font-size: 17px; }
+  .t-big { font-size: 46px; }
+  .t-main { padding: 20px 16px 18px 20px; }
+  .ticket { grid-template-columns: 1fr 52px; }
+  .ticket::before, .ticket::after { right: 40px; }
+  .seg { display: grid; width: 100%; }
+  .seg button { padding: 0 12px; }
+  .opt { padding: 20px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-umbrella" viewBox="0 0 24 24"><path d="M22 12a10 10 0 0 0-20 0Z"/><path d="M12 12v8a2 2 0 0 0 4 0"/><path d="M12 2v1"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11 22 2l-9 19-2-8-8-2Z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M17 3v18M3 7.5h4M3 12h18M3 16.5h4M17 7.5h4M17 16.5h4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="m9 20 3-6 3 2v6M7 12l3-4 4 1 3 3M10 8l-2 5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2Z"/></symbol>
+</svg>
+
+<a class="skip" href="#lich-trinh">Bỏ qua, xem lịch trình</a>
+
+<header class="hero">
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="sky" aria-hidden="true"></div>
+
+  <div class="wrap hero-top">
+    <span class="brand"><span class="dot"></span>Plan tối Chủ Nhật</span>
+    <span class="countdown" id="countdown" role="status"><svg class="i"><use href="#i-clock"/></svg><span>Chủ Nhật 08.11 · 17:30</span></span>
+  </div>
+
+  <div class="wrap hero-body">
+    <div>
+      <p class="eyebrow">Chủ Nhật · 08.11.2026</p>
+      <h1>Tối Chủ Nhật,<em>Sài Gòn lên đèn</em></h1>
+      <p class="lead">Ăn tối gần rạp → <strong>Godzilla suất 19:30</strong> → dạo đêm, tuỳ trời. Em Ngân xem nè.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#lich-trinh"><svg class="i"><use href="#i-clock"/></svg>Xem lịch trình</a>
+        <a class="btn btn-ghost" href="#sau-phim"><svg class="i"><use href="#i-moon"/></svg>Sau phim đi đâu</a>
+      </div>
+    </div>
+
+    <article class="ticket" aria-label="Vé phim">
+      <div class="t-main">
+        <div class="t-cinema"><svg class="i"><use href="#i-film"/></svg>Beta Ung Văn Khiêm</div>
+        <div class="t-title">Godzilla Trừ Không</div>
+        <p class="t-meta">2D phụ đề · 16+ · 2 giờ 15 phút</p>
+        <div class="t-times">
+          <span class="t-big">19:30</span>
+          <span class="t-arrow">ra rạp ~ <b>22:00</b></span>
+        </div>
+        <p class="t-note">MoMo ghi kết thúc 21:45 — cộng quảng cáo đầu phim, tính ra tới cửa khoảng 22:00.</p>
+      </div>
+      <div class="t-stub" aria-hidden="true">CN · 08 / 11</div>
+    </article>
+  </div>
+
+  <div class="skyline" aria-hidden="true">
+    <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="bldg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1d5c"/><stop offset="1" stop-color="#0b0820"/></linearGradient>
+        <linearGradient id="bldg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1240"/><stop offset="1" stop-color="#090717"/></linearGradient>
+        <linearGradient id="river" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e1650"/><stop offset="1" stop-color="#070616"/></linearGradient>
+        <pattern id="win" width="9" height="11" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="3" height="4" fill="#fde68a"/></pattern>
+        <pattern id="win2" width="13" height="9" patternUnits="userSpaceOnUse"><rect x="3" y="2" width="5" height="3" fill="#f9a8d4"/></pattern>
+        <g id="far"><path d="M0 225h40v-40h30v20h25v-55h38v75h22v-35h34v35h30v-60h28v60h40v-25h36v25h30v-70h40v70h30v-30h45v30h36v-45h30v45h38v-35h42v35h30v-65h34v65h36v-25h40v25h30v-50h36v50h32v-30h40v30h30v-58h44v58H1200v20H0Z"/></g>
+        <g id="city">
+          <path d="M60 225V140h44v85Z"/>
+          <path d="M130 225V110h30v-12h22v127Z"/>
+          <path d="M230 225V150h56v75Z"/>
+          <path d="M350 225 358 96q14-28 28 0l8 129Z"/>
+          <path d="M440 225V128h40v97Z"/>
+          <path d="M500 225V160h70v65Z"/>
+          <path d="M610 225V118h36v107Z"/>
+          <path d="M680 225V150h50v75Z"/>
+          <path d="M790 225V122h12V90h10V60h10V36h6V8h4v28h6v24h10v30h10v32h12v103Z"/>
+          <path d="M890 225V160h48v65Z"/>
+          <path d="M1120 225V146h46v79Z"/>
+        </g>
+      </defs>
+      <use href="#far" fill="url(#bldg2)" opacity=".8"/>
+      <use href="#city" fill="url(#bldg)"/>
+      <use href="#city" fill="url(#win)" opacity=".35"/>
+      <ellipse cx="394" cy="112" rx="20" ry="4" fill="#3b2a7a"/>
+      <circle cx="830" cy="8" r="3.5" fill="#f43f5e" class="blink"/>
+      <path d="M816 36h24" stroke="#67e8f9" stroke-width="2" opacity=".8"/>
+      <g stroke="#f9a8d4" stroke-width="1.4" opacity=".75" fill="none">
+        <path d="M1050 92 960 214M1050 92 990 214M1050 92 1020 214M1050 92 1080 214M1050 92 1110 214M1050 92 1140 214"/>
+      </g>
+      <path d="M1046 214 1050 86l4 128Z" fill="#c4b5fd"/>
+      <path d="M930 214h240" stroke="#fbbf24" stroke-width="4"/>
+      <path d="M930 214h240" stroke="#fde68a" stroke-width="1" stroke-dasharray="2 10"/>
+      <rect y="225" width="1200" height="75" fill="url(#river)"/>
+      <g class="water" opacity=".55">
+        <path d="M790 232h50M806 246h22M612 236h30M360 236h30M70 240h30M1050 232h10M960 244h170" stroke="#fde68a" stroke-width="2" stroke-dasharray="6 6" opacity=".7"/>
+        <path d="M826 236v40" stroke="#67e8f9" stroke-width="10" opacity=".14"/>
+        <path d="M372 236v40" stroke="#f9a8d4" stroke-width="10" opacity=".12"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<main id="main">
+  <section id="lich-trinh">
+    <div class="wrap">
+      <div class="s-head reveal">
+        <p class="kicker"><svg class="i"><use href="#i-clock"/></svg>Lịch trình</p>
+        <h2>Một tối, <em>sáu nhịp</em></h2>
+        <p class="s-sub">Mọi chỗ đều quanh rạp. Đi trễ nhất về lúc 23:00 — mai thứ Hai rồi.</p>
+      </div>
+      <ol class="timeline">
+        <li class="step reveal"><time>17:30</time><span class="node"><svg class="i"><use href="#i-heart"/></svg></span>
+          <div class="step-card"><h3>Gặp nhau</h3><p>Đi sớm một chút — Chủ Nhật quán đông từ 18:00.</p></div></li>
+        <li class="step reveal"><time>17:45</time><span class="node"><svg class="i"><use href="#i-food"/></svg></span>
+          <div class="step-card"><h3>Ăn tối gần rạp</h3><p><a href="#an-toi">3 quán bên dưới</a>, đều cách rạp khoảng 5 phút.</p></div></li>
+        <li class="step reveal"><time>19:10</time><span class="node"><svg class="i"><use href="#i-pin"/></svg></span>
+          <div class="step-card"><h3>Tới rạp</h3><p>Tầng trệt toà Pax Sky, 26 Ung Văn Khiêm. Lấy vé, mua bắp nước.</p></div></li>
+        <li class="step movie reveal"><time>19:30</time><span class="node"><svg class="i"><use href="#i-film"/></svg></span>
+          <div class="step-card"><h3>Godzilla Trừ Không</h3><p>2 giờ 15 phút. Ra rạp khoảng 22:00.</p></div></li>
+        <li class="step reveal"><time>22:00</time><span class="node"><svg class="i"><use href="#i-moon"/></svg></span>
+          <div class="step-card"><h3>Dạo đêm + cafe</h3><p>Khô ráo thì ra bờ sông, mưa thì vào trong nhà — <a href="#sau-phim">xem 2 phương án</a>.</p></div></li>
+        <li class="step reveal"><time>23:00</time><span class="node"><svg class="i"><use href="#i-home"/></svg></span>
+          <div class="step-card"><h3>Đưa Ngân về</h3><p>Ngủ sớm cho thứ Hai.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="an-toi">
+    <div class="wrap">
+      <div class="s-head reveal">
+        <p class="kicker"><svg class="i"><use href="#i-food"/></svg>Trước phim</p>
+        <h2>Ăn gì <em>trước 19:10?</em></h2>
+        <p class="s-sub">Ba vị khác nhau, đều quanh đường Nguyễn Gia Trí (D2) và Ung Văn Khiêm. Bấm vào thẻ để chọn.</p>
+      </div>
+      <div class="grid grid-3" role="radiogroup" aria-label="Chọn quán ăn tối">
+        <label class="opt reveal">
+          <input type="radio" name="dinner" value="kimura" checked data-name="Ramen Kimura" data-addr="hẻm 213/11 Nguyễn Gia Trí">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Nhật · nhanh gọn</p>
+          <h3>Ramen Kimura</h3>
+          <p>Ramen tonkotsu, cà ri Nhật. Lên món nhanh — chắc kịp suất 19:30.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-pin"/></svg>Hẻm 213/11 Nguyễn Gia Trí</li>
+            <li><svg class="i"><use href="#i-clock"/></svg>10:00–22:00 · đông nhất 18–20h</li>
+          </ul>
+          <div class="opt-foot"><a class="mini" data-q="Ramen Kimura 213/11 Nguyễn Gia Trí Bình Thạnh" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a></div>
+        </label>
+        <label class="opt reveal">
+          <input type="radio" name="dinner" value="obistro" data-name="Ơ Bistro" data-addr="157/1A Nguyễn Gia Trí">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Âu · ấm cúng</p>
+          <h3>Ơ Bistro</h3>
+          <p>Steak, pasta, pizza. Bàn gỗ, khăn caro — đúng chất hẹn hò.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-pin"/></svg>157/1A Nguyễn Gia Trí</li>
+            <li><svg class="i"><use href="#i-clock"/></svg>Tối 17:00–21:30</li>
+            <li class="warn"><svg class="i"><use href="#i-alert"/></svg>Nên đặt bàn trước</li>
+          </ul>
+          <div class="opt-foot">
+            <a class="mini" data-q="Ơ Bistro 157/1A Nguyễn Gia Trí Bình Thạnh" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a>
+            <a class="mini" href="tel:0866555157"><svg class="i"><use href="#i-phone"/></svg>0866 555 157</a>
+          </div>
+        </label>
+        <label class="opt reveal">
+          <input type="radio" name="dinner" value="khapi" data-name="Quán Thái Khapi" data-addr="100 Ung Văn Khiêm">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Thái · chua cay</p>
+          <h3>Quán Thái Khapi</h3>
+          <p>Gỏi đu đủ ba khía, pad Thái, xôi xoài. Máy lạnh, tầng trên riêng tư hơn.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-pin"/></svg>100 Ung Văn Khiêm</li>
+            <li><svg class="i"><use href="#i-clock"/></svg>11:00–23:00</li>
+            <li class="warn"><svg class="i"><use href="#i-alert"/></svg>Chủ Nhật nên đặt bàn</li>
+          </ul>
+          <div class="opt-foot"><a class="mini" data-q="Quán Thái Khapi 100 Ung Văn Khiêm Bình Thạnh" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a></div>
+        </label>
+      </div>
+      <p class="tip reveal"><svg class="i"><use href="#i-alert"/></svg><span>Né lẩu, nướng trước giờ phim — mùi khói ám vào áo ngồi rạp hơn 2 tiếng.</span></p>
+    </div>
+  </section>
+
+  <section id="sau-phim" class="after" data-weather="dry">
+    <div class="rain" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="s-head reveal">
+        <p class="kicker"><svg class="i"><use href="#i-moon"/></svg>Sau 22:00</p>
+        <h2>Sau phim <em>đi đâu?</em></h2>
+        <p class="s-sub">Đúng ý Ngân: trời khô thì ra ngoài, mưa thì vào chỗ có mái che. Chọn thời tiết lúc 17:00 nhé.</p>
+      </div>
+      <div class="seg" role="group" aria-label="Thời tiết tối Chủ Nhật">
+        <button type="button" data-set="dry" aria-pressed="true"><svg class="i"><use href="#i-sun"/></svg>Trời khô</button>
+        <button type="button" data-set="rain" aria-pressed="false"><svg class="i"><use href="#i-umbrella"/></svg>Trời mưa</button>
+      </div>
+
+      <div class="grid grid-2" data-when="dry" role="radiogroup" aria-label="Phương án khi trời khô">
+        <label class="opt">
+          <span class="badge">Đẹp nhất</span>
+          <input type="radio" name="after" value="bachdang" checked data-name="Bờ sông Bạch Đằng + phố đi bộ Nguyễn Huệ" data-addr="gửi xe bãi Tôn Thất Thiệp">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Bờ sông · đèn thành phố</p>
+          <h3>Bến Bạch Đằng + phố đi bộ Nguyễn Huệ</h3>
+          <p>Dạo dọc bờ sông, nhìn cầu Ba Son lên đèn và Thủ Thiêm bên kia sông. Còn sức thì đi tiếp lên cầu Ba Son.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-nav"/></svg>5,3 km từ rạp · khoảng 15 phút xe máy</li>
+            <li><svg class="i"><use href="#i-walk"/></svg>Nguyễn Huệ → bờ sông → chân cầu Ba Son, đi bộ ~1,5 km</li>
+            <li><svg class="i"><use href="#i-pin"/></svg>Gửi xe bãi Tôn Thất Thiệp, giữ 24/24</li>
+            <li class="warn"><svg class="i"><use href="#i-alert"/></svg>Ven sông gió lớn — mang áo khoác mỏng</li>
+          </ul>
+          <div class="opt-foot"><a class="mini" data-q="Công viên Bến Bạch Đằng" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a></div>
+        </label>
+        <label class="opt">
+          <span class="badge soft">Gần nhất</span>
+          <input type="radio" name="after" value="tamvu" data-name="Công viên bờ kè Tầm Vu" data-addr="đường Tầm Vu">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Ngồi bờ kè · ăn vặt</p>
+          <h3>Công viên bờ kè Tầm Vu</h3>
+          <p>Phương án của Ngân. Ngồi ven kênh, ăn vặt: xôi chiên, ốc, bánh tráng nướng. Đường dạo ngắn, nước hơi dở — hợp ngồi chơi hơn đi dạo.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-nav"/></svg>1,2 km từ rạp · khoảng 5 phút</li>
+            <li><svg class="i"><use href="#i-clock"/></svg>Mở tới 23:00</li>
+          </ul>
+          <div class="opt-foot"><a class="mini" data-q="Công viên Tầm Vu Bình Thạnh" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a></div>
+        </label>
+      </div>
+
+      <div class="grid grid-2" data-when="rain" role="radiogroup" aria-label="Phương án khi trời mưa">
+        <label class="opt">
+          <span class="badge cyan">Bùng nổ</span>
+          <input type="radio" name="after" value="blank" data-name="Blank Sky Lounge, Landmark 81 tầng 75–76" data-addr="720A Điện Biên Phủ">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Tầng 75–76 · nhìn cả Sài Gòn</p>
+          <h3>Blank Sky Lounge — Landmark 81</h3>
+          <p>Ngồi trong nhà, nhìn thành phố dưới mưa từ trên cao. Mưa càng to càng đẹp.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-nav"/></svg>2,4 km từ rạp · khoảng 8 phút</li>
+            <li><svg class="i"><use href="#i-clock"/></svg>9:30–24:00, gọi món cuối 23:30</li>
+            <li class="warn"><svg class="i"><use href="#i-alert"/></svg>Có nguồn ghi đóng 22:30 — gọi hỏi trước</li>
+          </ul>
+          <div class="opt-foot">
+            <a class="mini" data-q="Blank Sky Lounge Landmark 81" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a>
+            <a class="mini" href="tel:0903672944"><svg class="i"><use href="#i-phone"/></svg>0903 672 944</a>
+          </div>
+        </label>
+        <label class="opt">
+          <span class="badge soft">Sát rạp</span>
+          <input type="radio" name="after" value="soco" data-name="Soco Saigon Coffee" data-addr="42/3 Ung Văn Khiêm">
+          <span class="pick"><svg class="i"><use href="#i-check"/></svg></span>
+          <p class="opt-kicker">Cafe sân vườn · có phòng lạnh</p>
+          <h3>Soco Saigon Coffee</h3>
+          <p>Phòng máy lạnh và sân vườn, ngồi lâu thoải mái. Không phải chạy xa dưới mưa.</p>
+          <ul class="facts">
+            <li><svg class="i"><use href="#i-pin"/></svg>42/3 Ung Văn Khiêm · vài phút từ rạp</li>
+            <li><svg class="i"><use href="#i-clock"/></svg>Mở 24/24</li>
+          </ul>
+          <div class="opt-foot"><a class="mini" data-q="Soco Saigon Coffee 42/3 Ung Văn Khiêm" target="_blank" rel="noopener"><svg class="i"><use href="#i-nav"/></svg>Chỉ đường</a></div>
+        </label>
+      </div>
+
+      <details class="dropped">
+        <summary>Vì sao không chọn công viên Landmark 81?</summary>
+        <ul>
+          <li><b>Công viên Vinhomes Central Park</b> đóng 21:30 — phim chưa hết đã đóng.</li>
+          <li><b>Công viên bờ sông Thủ Thiêm</b> — đa số nguồn ghi mở tới 22:00, bãi xe cũng đóng 22:00.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section id="ban-do">
+    <div class="wrap">
+      <div class="s-head reveal">
+        <p class="kicker"><svg class="i"><use href="#i-pin"/></svg>Bản đồ</p>
+        <h2>Mọi thứ <em>quanh rạp</em></h2>
+        <p class="s-sub">Đường kẻ nối rạp với chỗ đang chọn ở phần "Sau phim" — đổi thời tiết là đổi theo.</p>
+      </div>
+      <div class="map-shell reveal"><div id="map" role="region" aria-label="Bản đồ các điểm hẹn"></div></div>
+      <div class="legend">
+        <span><i style="background:var(--pink-strong)"></i>Rạp Beta</span>
+        <span><i style="background:var(--violet)"></i>Khu ăn tối</span>
+        <span><i style="background:var(--gold)"></i>Trời khô</span>
+        <span><i style="background:var(--cyan)"></i>Trời mưa</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="chot">
+    <div class="wrap two">
+      <div class="panel reveal">
+        <h3>Trước khi đi</h3>
+        <ul class="checks" id="checks">
+          <li><label><input type="checkbox" data-k="pin"><span>Sạc đầy pin<small>Ngân dặn rồi đó</small></span></label></li>
+          <li><label><input type="checkbox" data-k="ve"><span>Đặt vé 19:30 trên MoMo<small>Chọn ghế giữa rạp</small></span></label></li>
+          <li><label><input type="checkbox" data-k="ban"><span>Đặt bàn quán ăn<small>Chủ Nhật đông từ 18:00</small></span></label></li>
+          <li><label><input type="checkbox" data-k="troi"><span>17:00 xem trời, chốt khô hay mưa</span></label></li>
+          <li><label><input type="checkbox" data-k="ao"><span>Áo mưa + áo khoác mỏng</span></label></li>
+        </ul>
+        <div class="progress" aria-hidden="true"><div id="bar"></div></div>
+      </div>
+      <div class="panel summary reveal">
+        <h3>Plan đã chọn</h3>
+        <ol class="sum-list" id="sum"></ol>
+        <button type="button" class="btn btn-primary" id="copy"><svg class="i"><use href="#i-copy"/></svg>Copy plan để nhắn</button><span class="copied" id="copied" role="status"></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Nguồn · tra ngày 04/11/2026</h2>
+    <ul>
+      <li>Suất chiếu: ảnh MoMo trong chat (Beta Ung Văn Khiêm, CN 08/11)</li>
+      <li><a href="https://vnpay.vn/ve-xem-phim/rap/beta-cinemas/beta-ung-van-khiem-18" target="_blank" rel="noopener">VNPAY — địa chỉ rạp Beta Ung Văn Khiêm</a></li>
+      <li><a href="https://www.ramenkimura.vn/en/location" target="_blank" rel="noopener">Ramen Kimura — địa chỉ, giờ mở</a></li>
+      <li><a href="https://www.foody.vn/ho-chi-minh/o-bistro-steak-pasta-nguyen-gia-tri" target="_blank" rel="noopener">Foody — Ơ Bistro</a></li>
+      <li><a href="https://vietinsiders.com/places/quan-thai-khapi-ung-van-khiem-binh-thanh/" target="_blank" rel="noopener">Vietinsiders — Quán Thái Khapi</a></li>
+      <li><a href="https://mia.vn/cam-nang-du-lich/cong-vien-tam-vu-binh-thanh-19197" target="_blank" rel="noopener">Mia.vn — Công viên Tầm Vu</a></li>
+      <li><a href="https://muctim.tuoitre.vn/tham-quan-duong-hoa-nguyen-hue-va-xem-phao-hoa-gui-xe-o-dau-101260216174524092.htm" target="_blank" rel="noopener">Tuổi Trẻ — gửi xe Nguyễn Huệ</a></li>
+      <li><a href="https://vnguide.vn/restaurant/blank-sky-lounge-landmark" target="_blank" rel="noopener">VnGuide — Blank Sky Lounge (06/2026)</a></li>
+      <li><a href="https://wanderlog.com/place/details/11972979/soco-saigon-coffee" target="_blank" rel="noopener">Wanderlog — Soco Saigon Coffee</a></li>
+      <li><a href="https://market.vinhomes.vn/blog/cong-vien-vinhomes-central-park" target="_blank" rel="noopener">Vinhomes — giờ công viên Central Park</a></li>
+      <li><a href="https://smartparking.vn/smartparking-van-hanh-thuc-te-tai-bai-giu-xe-cong-vien-bo-song-thu-thiem-thanh-pho-ho-chi-minh/" target="_blank" rel="noopener">SmartParking — bãi xe bờ sông Thủ Thiêm</a></li>
+    </ul>
+    <p>Khoảng cách: OpenStreetMap + OSRM. Giờ mở cửa các nguồn có chỗ lệch nhau — gọi trước những chỗ có dấu cảnh báo.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var sky = document.querySelector('.sky');
+  for (var s = 0; s < 110; s++) {
+    var star = document.createElement('i');
+    var size = Math.random() < .15 ? 3 : (Math.random() < .5 ? 2 : 1);
+    star.style.cssText = 'left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;width:' + size + 'px;height:' + size + 'px;opacity:' + (.35 + Math.random() * .65) + ';animation-delay:' + (-Math.random() * 4) + 's;animation-duration:' + (2.4 + Math.random() * 3) + 's';
+    sky.appendChild(star);
+  }
+
+  var countdown = document.getElementById('countdown').querySelector('span');
+  var meetAt = new Date('2026-11-08T17:30:00+07:00').getTime();
+  function renderCountdown() {
+    var diff = meetAt - Date.now();
+    if (diff <= 0) {
+      countdown.innerHTML = diff > -6 * 3600e3 ? '<b>Tối nay rồi đó!</b>' : 'Chủ Nhật 08.11 · 17:30';
+      return;
+    }
+    var days = Math.floor(diff / 864e5);
+    var hours = Math.floor(diff % 864e5 / 36e5);
+    var mins = Math.floor(diff % 36e5 / 6e4);
+    countdown.innerHTML = days > 0
+      ? 'Còn <b>' + days + '</b> ngày <b>' + hours + '</b> giờ'
+      : 'Còn <b>' + hours + '</b> giờ <b>' + mins + '</b> phút';
+  }
+  renderCountdown();
+  setInterval(renderCountdown, 30e3);
+
+  document.querySelectorAll('[data-q]').forEach(function (a) {
+    a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(a.dataset.q);
+    a.addEventListener('click', function (e) { e.stopPropagation(); });
+  });
+  document.querySelectorAll('.opt a[href^="tel:"]').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.stopPropagation(); });
+  });
+
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: '0px 0px 12% 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      if (el.getBoundingClientRect().top > window.innerHeight) {
+        io.observe(el);
+      }
+    });
+  }
+
+  var spots = {
+    beta: { at: [10.8088291, 106.7130937], label: 'Beta Ung Văn Khiêm', tone: 'pink' },
+    bachdang: { at: [10.7784042, 106.7075008], label: 'Bờ sông Bạch Đằng', tone: 'gold', left: true },
+    nguyenhue: { at: [10.7754135, 106.7001378], tip: 'Phố đi bộ Nguyễn Huệ', tone: 'gold' },
+    bason: { at: [10.7804050, 106.7085056], tip: 'Cầu Ba Son', tone: 'gold' },
+    tamvu: { at: [10.8166328, 106.7153004], label: 'Công viên Tầm Vu', tone: 'gold' },
+    blank: { at: [10.7950845, 106.7219139], label: 'Landmark 81', tone: 'cyan', left: true }
+  };
+  var dinnerZone = [10.8082415, 106.7165492];
+  var map = null;
+  var routeLine = null;
+
+  if (window.L) {
+    map = L.map('map', { scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false, zoomControl: true, attributionControl: true });
+    var esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
+    L.tileLayer(esri + 'World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16,
+      attribution: 'Esri, HERE, Garmin &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    L.tileLayer(esri + 'World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
+    L.circle(dinnerZone, { radius: 520, color: '#a78bfa', weight: 2, fillColor: '#8b5cf6', fillOpacity: .32, dashArray: '4 6' })
+      .addTo(map).bindTooltip('Khu ăn tối · Nguyễn Gia Trí', { direction: 'top' });
+    Object.keys(spots).forEach(function (key) {
+      var spot = spots[key];
+      var html = spot.label
+        ? '<span class="pin-wrap' + (spot.left ? ' left' : '') + '"><span class="pin ' + spot.tone + '"></span><span class="pin-label">' + spot.label + '</span></span>'
+        : '<span class="pin-wrap"><span class="pin small ' + spot.tone + '"></span></span>';
+      var icon = L.divIcon({ className: '', iconSize: [16, 16], iconAnchor: [8, 8], html: html });
+      var marker = L.marker(spot.at, { icon: icon, keyboard: false, zIndexOffset: key === 'beta' ? 1000 : 0 }).addTo(map);
+      if (spot.tip) {
+        marker.bindTooltip(spot.tip, { direction: 'right', offset: [10, 0] });
+      }
+    });
+    map.fitBounds(Object.keys(spots).map(function (k) { return spots[k].at; }), { padding: [40, 40] });
+  } else {
+    document.getElementById('map').innerHTML = '<p class="map-fallback">Không tải được bản đồ (cần mạng). Dùng nút "Chỉ đường" ở từng thẻ.</p>';
+  }
+
+  function drawRoute(afterKey) {
+    if (!map) {
+      return;
+    }
+    if (routeLine) {
+      map.removeLayer(routeLine);
+    }
+    routeLine = null;
+    var target = spots[afterKey];
+    if (!target) {
+      return;
+    }
+    var color = target.tone === 'cyan' ? '#22d3ee' : '#fbbf24';
+    routeLine = L.polyline([spots.beta.at, target.at], { color: color, weight: 4, opacity: .9, dashArray: '2 10', lineCap: 'round' }).addTo(map);
+  }
+
+  var after = document.getElementById('sau-phim');
+  var segButtons = after.querySelectorAll('.seg button');
+  function setWeather(weather) {
+    after.dataset.weather = weather;
+    segButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.set === weather)); });
+    var visibleChecked = after.querySelector('[data-when="' + weather + '"] input:checked');
+    if (!visibleChecked) {
+      after.querySelector('[data-when="' + weather + '"] input').checked = true;
+    }
+    renderSummary();
+  }
+  segButtons.forEach(function (b) {
+    b.addEventListener('click', function () { setWeather(b.dataset.set); });
+  });
+
+  var sum = document.getElementById('sum');
+  function pickedText() {
+    var dinner = document.querySelector('input[name="dinner"]:checked');
+    var afterPick = document.querySelector('input[name="after"]:checked');
+    var rainy = after.dataset.weather === 'rain';
+    return {
+      dinner: dinner, afterPick: afterPick, rainy: rainy,
+      lines: [
+        ['17:45', 'Ăn ' + dinner.dataset.name, dinner.dataset.addr],
+        ['19:30', 'Godzilla Trừ Không', 'Beta Ung Văn Khiêm · ra rạp ~22:00'],
+        ['22:00', afterPick.dataset.name, (rainy ? 'Phương án mưa · ' : 'Phương án trời khô · ') + afterPick.dataset.addr],
+        ['23:00', 'Về nhà', '']
+      ]
+    };
+  }
+  function renderSummary() {
+    var picked = pickedText();
+    sum.innerHTML = picked.lines.map(function (l) {
+      return '<li><b>' + l[0] + '</b><span>' + l[1] + (l[2] ? '<small>' + l[2] + '</small>' : '') + '</span></li>';
+    }).join('');
+    drawRoute(picked.afterPick.value);
+  }
+  document.querySelectorAll('input[name="dinner"], input[name="after"]').forEach(function (r) {
+    r.addEventListener('change', renderSummary);
+  });
+  renderSummary();
+
+  var copiedNote = document.getElementById('copied');
+  document.getElementById('copy').addEventListener('click', function () {
+    var picked = pickedText();
+    var text = 'Plan tối CN 08/11 nè\n' + picked.lines.map(function (l) {
+      return l[0] + ' · ' + l[1] + (l[2] ? ' (' + l[2] + ')' : '');
+    }).join('\n');
+    function done(ok) {
+      copiedNote.textContent = ok ? 'Đã copy — dán vào Messenger nhé' : 'Không copy được, bôi đen phần trên để copy';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      return;
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    done(ok);
+  });
+
+  var boxes = document.querySelectorAll('#checks input');
+  var bar = document.getElementById('bar');
+  function storage() {
+    try { return window.localStorage; } catch (e) { return null; }
+  }
+  function renderProgress() {
+    var done = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
+    bar.style.width = (done / boxes.length * 100) + '%';
+  }
+  boxes.forEach(function (b) {
+    var store = storage();
+    try { b.checked = !!(store && store.getItem('hen-0811-' + b.dataset.k)); } catch (e) { b.checked = false; }
+    b.addEventListener('change', function () {
+      var st = storage();
+      try {
+        if (st) {
+          if (b.checked) {
+            st.setItem('hen-0811-' + b.dataset.k, '1');
+          } else {
+            st.removeItem('hen-0811-' + b.dataset.k);
+          }
+        }
+      } catch (e) {}
+      renderProgress();
+    });
+  });
+  renderProgress();
+})();
+</script>
+</body>
+</html>
