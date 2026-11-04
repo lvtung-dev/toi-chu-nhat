@@ -238,12 +238,6 @@ section .bokeh { z-index: -2; }
 .choice b { color: var(--text); font-weight: 600; }
 .copied { display: block; min-height: 1.6em; margin-top: 12px; font-size: var(--fs-sm); color: var(--text); }
 
-footer { padding-block: 40px calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--fs-sm); }
-footer summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-size: var(--fs-xs); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-footer ul { margin: 12px 0 18px; padding-left: 18px; columns: 2; column-gap: 32px; }
-footer li { margin-bottom: 6px; break-inside: avoid; }
-footer a { color: var(--rose-soft); }
-
 /* motion & delight */
 .hero .eyebrow, .hero h1, .hero h1 em, .hero .lead, .hero .cta { animation: enter 1s var(--ease) both; }
 .hero h1 { animation-delay: .15s; }
@@ -309,7 +303,6 @@ footer a { color: var(--rose-soft); }
   .hero-body { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
   .ticket { transform: rotate(-1.5deg); max-width: 460px; }
   .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  footer ul { columns: 1; }
 }
 @media (max-width: 480px) {
   section { padding-block: 68px; }
@@ -630,27 +623,6 @@ footer a { color: var(--rose-soft); }
     </div>
   </section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <details>
-    <summary>Nguồn tham khảo · 04/11/2026</summary>
-    <ul>
-      <li>Suất chiếu: ảnh MoMo trong chat (Beta Ung Văn Khiêm, CN 08/11)</li>
-      <li><a href="https://vnpay.vn/ve-xem-phim/rap/beta-cinemas/beta-ung-van-khiem-18" target="_blank" rel="noopener">VNPAY — địa chỉ rạp Beta Ung Văn Khiêm</a></li>
-      <li><a href="https://www.foody.vn/ho-chi-minh/o-bistro-steak-pasta-nguyen-gia-tri" target="_blank" rel="noopener">Foody — Ơ Bistro</a></li>
-      <li><a href="https://vietinsiders.com/places/quan-thai-khapi-ung-van-khiem-binh-thanh/" target="_blank" rel="noopener">Vietinsiders — Quán Thái Khapi</a></li>
-      <li><a href="https://mia.vn/cam-nang-du-lich/cong-vien-tam-vu-binh-thanh-19197" target="_blank" rel="noopener">Mia.vn — Công viên Tầm Vu</a></li>
-      <li><a href="https://muctim.tuoitre.vn/tham-quan-duong-hoa-nguyen-hue-va-xem-phao-hoa-gui-xe-o-dau-101260216174524092.htm" target="_blank" rel="noopener">Tuổi Trẻ — gửi xe Nguyễn Huệ</a></li>
-      <li><a href="https://vnguide.vn/restaurant/blank-sky-lounge-landmark" target="_blank" rel="noopener">VnGuide — Blank Sky Lounge (06/2026)</a></li>
-      <li><a href="https://wanderlog.com/place/details/11972979/soco-saigon-coffee" target="_blank" rel="noopener">Wanderlog — Soco Saigon Coffee</a></li>
-      <li><a href="https://market.vinhomes.vn/blog/cong-vien-vinhomes-central-park" target="_blank" rel="noopener">Vinhomes — giờ công viên Central Park</a></li>
-      <li><a href="https://smartparking.vn/smartparking-van-hanh-thuc-te-tai-bai-giu-xe-cong-vien-bo-song-thu-thiem-thanh-pho-ho-chi-minh/" target="_blank" rel="noopener">SmartParking — bãi xe bờ sông Thủ Thiêm</a></li>
-    </ul>
-    <p>Khoảng cách: OpenStreetMap + OSRM.</p>
-    </details>
-  </div>
-</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
